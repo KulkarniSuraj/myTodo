@@ -2,6 +2,13 @@ var addBtn = document.getElementById('add')
 var removeBtn = document.getElementById('remove')
 var deleteAllBtn = document.getElementById('reset')
 var ulist = document.getElementById('list')
+// creating todo class
+class Todo {
+    constructor(item) {
+        this.title = item;
+        this.isDone = false;
+    }
+}
 
 // adds event listeners to the buttons
 addBtn.addEventListener('click', addItem)
@@ -12,7 +19,12 @@ function addItem() {
     var inp = document.getElementById('input')
     var item = inp.value
     inp.value = ''   // resetting the textbox
+    //adding value to local storage
 
+    todotxt = JSON.stringify(new Todo(item));
+    localStorage.setItem('listName', todotxt)
+    //fetching todo from localstorage to display
+    todoItem = JSON.parse(localStorage.getItem('listName'));
 
     var textNode = document.createTextNode(item)
     if (item === '') {
@@ -67,4 +79,12 @@ function deleteAll() {
 
     }
 
+}
+
+
+function showList() {
+    for (let index = 0; index < localStorage.length; index++) {
+        const element = localStorage.getItem(loacalStorage.key[index];
+
+    }
 }
