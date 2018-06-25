@@ -2,6 +2,7 @@ var addBtn = document.getElementById('add')
 var removeBtn = document.getElementById('remove')
 var deleteAllBtn = document.getElementById('reset')
 var ulist = document.getElementById('list')
+
 // creating todo class
 class Todo {
     constructor(item) {
@@ -22,20 +23,17 @@ addBtn.addEventListener('click', addItem)
 removeBtn.addEventListener('click', removeItem)
 deleteAllBtn.addEventListener('click', deleteAll)
 
-
-
-function addItem() {
-    var inp = document.getElementById('input')
-    var item = inp.value
-    inp.value = ''   // resetting the textbox
-    addtoLocalStorage(item)
+function render(item) {
     var textNode = document.createTextNode(item)
     // create li
     li = document.createElement('li')
+    li.setAttribute('class', 'visual')
 
     // create checkbox
     var checkbx = document.createElement('input')
     checkbx.type = 'checkbox'
+
+
     checkbx.setAttribute('id', 'check')
 
     //create label
@@ -49,7 +47,18 @@ function addItem() {
     ulist.insertBefore(li, ulist.childNodes[0])
     setTimeout(() => {
         li.className = 'visual'
-    }, 5);
+    }, 3);
+}
+
+
+
+function addItem() {
+    var inp = document.getElementById('input')
+    var item = inp.value
+    inp.value = ''   // resetting the textbox
+    addtoLocalStorage(item)
+    render(item)
+
 }
 
 
@@ -86,6 +95,7 @@ function showList() {
         if (localStorage.hasOwnProperty(key)) {
             const element = localStorage[key];
             console.log(localStorage.getItem(key))
+            render(JSON.parse(localStorage.getItem(key)).title)
         }
 
     }
