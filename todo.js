@@ -12,18 +12,18 @@ class Todo {
 }
 
 //adding item to local storage
-function addtoLocalStorage(item) {
+function addtoLocalStorage (item) {
 
     todotxt = JSON.stringify(new Todo(item));
     localStorage.setItem(Math.random(), todotxt)
 }
 
 // adds event listeners to the buttons
-addBtn.addEventListener('click', addItem)
+document.querySelector("#form").addEventListener('submit', addItem)
 removeBtn.addEventListener('click', removeItem)
 deleteAllBtn.addEventListener('click', deleteAll)
 
-function render(item) {
+function render (item) {
     var textNode = document.createTextNode(item)
     // create li
     li = document.createElement('li')
@@ -44,7 +44,7 @@ function render(item) {
     li.appendChild(checkbx)
     li.appendChild(lbl)
 
-    ulist.insertBefore(li, ulist.childNodes[0])
+    ulist.appendChild(li)
     setTimeout(() => {
         li.className = 'visual'
     }, 3);
@@ -52,17 +52,19 @@ function render(item) {
 
 
 
-function addItem() {
+function addItem (e) {
+    e.preventDefault()
     var inp = document.getElementById('input')
-    var item = inp.value
-    inp.value = ''   // resetting the textbox
-    addtoLocalStorage(item)
-    render(item)
-
+    if (inp.val !== "") {
+        var item = inp.value
+        inp.value = ''
+        addtoLocalStorage(item)
+        render(item)
+    }
 }
 
 
-function removeItem() {
+function removeItem () {
     listItems = ulist.children
     for (let index = 0; index < listItems.length; index++) {
         const element = listItems[index];
@@ -74,7 +76,7 @@ function removeItem() {
     }
 }
 
-function deleteAll() {
+function deleteAll () {
     // alert('Are you sure you want to delete all of the todos')
     localStorage.clear()
     listItems = ulist.children
@@ -90,7 +92,7 @@ function deleteAll() {
 }
 
 
-function showList() {
+function showList () {
     for (const key in localStorage) {
         if (localStorage.hasOwnProperty(key)) {
             const element = localStorage[key];
